@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ employee['name'] }}{% endblock %}
+{% block active %}{{ 'departments' if from_department else 'employees' }}{% endblock %}
+
+{% block content %}
+    <div class="container-xl d-block justify-content-center" style="min-height: 400px">
+
+        <div class="container-lg d-flex align-items-center" style="background: none; max-width: 100%">
+            <div class="mr-auto">
+                <a href="{{ url_for('departments.get_department', department_id=department_id) if from_department
+                                else url_for('employees.get_employees') }}">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/009-return.png') }}" alt="">
+                </a>
+            </div>
+
+            <div class="flex-fill d-flex justify-content-center" style="margin-left: 60px">
+                <p class="text-center gray_color h1">Employee</p>
+            </div>
+
+            <div class="ml-auto">
+                <a href="
+                {% if from_department %}
+                    {{ url_for('departments.employees.edit_employee',
+                                department_id=department_id, employee_id=employee['id']) }}
+                {% else %}
+                    {{ url_for('employees.edit_employee', employee_id=employee['id']) }}
+                {% endif %}
+            ">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/003-edit-text.png') }}"
+                         alt="">
+                </a>
+            </div>
+            <div>
+                <a href="
+                {% if from_department %}
+                    {{ url_for('departments.employees.delete_employee',
+                                department_id=department_id, employee_id=employee['id']) }}
+                {% else %}
+                    {{ url_for('employees.delete_employee', employee_id=employee['id']) }}
+                {% endif %}
+            ">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/004-trash-bin.png') }}"
+                         alt="">
+                </a>
+            </div>
+        </div>
+
+
+        <div class="container-md d-flex flex-column justify-content-center" style="background: none;">
+
+            <div class="d-flex">
+                <p class="text-left gray_color h3">Name:</p>
+                <p class="text-left gray_color end_with_dots h3" style="margin-left: 10px">{{ employee['name'] }}</p>
+            </div>
+
+            <div class="d-flex">
+                <p class="text-left gray_color h3">Department:</p>
+                <p class="text-left gray_color end_with_dots h3"
+                   style="margin-left: 10px">{{ employee['department']['name'] }}</p>
+            </div>
+
+            <div class="d-flex">
+                <p class="text-left gray_color h3">Salary:</p>
+                <p class="text-left gray_color h3" style="margin-left: 10px">{{ employee['salary'] }} $</p>
+            </div>
+
+            <div class="d-flex">
+                <p class="text-left gray_color h3">Date of Birth:</p>
+                <p class="text-left gray_color h3" style="margin-left: 10px">{{ employee['date_of_birth'] }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

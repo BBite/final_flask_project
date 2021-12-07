@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ department['name'] }}{% endblock %}
+{% block active %}departments{% endblock %}
+
+{% block content %}
+    <div class="container-xl d-block justify-content-center">
+
+        <div class="container-lg d-flex align-items-center" style="background: none; max-width: 100%">
+            <div class="mr-auto">
+                <a href="{{ url_for('get_departments') }}">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/009-return.png') }}" alt="">
+                </a>
+            </div>
+
+            <div class="flex-fill d-flex justify-content-center" style="margin-left: 60px">
+                <p class="text-center gray_color end_with_dots h1">{{ department['name'] }}</p>
+            </div>
+
+            <div class="ml-auto">
+                <a href="{{ url_for('departments.edit_department', department_id=department['id']) }}">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/003-edit-text.png') }}"
+                         alt="">
+                </a>
+            </div>
+            <div>
+                <a href="{{ url_for('departments.delete_department', department_id=department['id']) }}">
+                    <img class="img_button_lg" src="{{ url_for('static', filename='images/004-trash-bin.png') }}"
+                         alt="">
+                </a>
+            </div>
+        </div>
+
+        <p class="text-center gray_color h3">Average salary: {{ department['avg_salary'] }} $</p>
+
+        <div class="container-md d-block justify-content-center">
+
+            <p class="text-center gray_color h1" style="font-size: 46px; margin-top: 5px">Employees</p>
+
+
+            {% for employee in department['employees'] %}
+                <div class="container-sm d-flex align-items-center">
+                    <div class="mr-auto">
+                        <a href="{{ url_for('departments.employees.get_employee',
+                            department_id=department['id'], employee_id=employee['id']) }}">
+                            <img class="img_button_md" src="{{ url_for('static', filename='images/008-eye.png') }}"
+                                 alt="">
+                        </a>
+                    </div>
+
+                    <div class="flex-fill d-flex justify-content-between">
+                        <div class="flex-grow-1" style="margin-left: 50px">
+                            <p class="text-left gray_color end_with_dots h4" style="max-width: 300px">
+                                {{ employee['name'] }}
+                            </p>
+                        </div>
+                        <div style="margin-right: 110px">
+                            <p class="text-right gray_color h4">{{ employee['salary'] }} $</p>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

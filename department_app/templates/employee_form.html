@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if new %}
+        New employee
+    {% else %}
+        {{ employee['name'] }}
+    {% endif %}
+{% endblock %}
+{% block active %}{{ 'departments' if from_department else 'employees' }}{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="container-xl d-block justify-content-center" style="min-height: 400px">
+
+            <div class="container-lg d-flex align-items-center" style="background: none; max-width: 100%">
+                <div class="mr-auto">
+                    <a href="{{ (url_for('departments.get_department',
+                                    department_id=department['id']) if new
+                                    else url_for('departments.employees.get_employee',
+                                    department_id=department['id'], employee_id=employee['id'])) if from_department
+                                else (url_for('employees.get_employees') if new
+                                    else url_for('employees.get_employee', employee_id=employee['id'])) }}">
+                        <img class="img_button_lg"
+                             src="{{ url_for('static', filename='images/009-return.png') }}" alt="">
+                    </a>
+                </div>
+
+                <div class="flex-fill d-flex justify-content-center" style="margin-left: 60px">
+                    <p class="text-center gray_color h1">Employee</p>
+                </div>
+
+                <div class="ml-auto">
+                    {{ form.submit(class="img_button_lg", type='image',
+                    src= url_for('static', filename='images/006-tick.png', alt='Submit')) }}
+                </div>
+                <div>
+                    <a href="{{ (url_for('departments.get_department',
+                                    department_id=department['id']) if new
+                                    else url_for('departments.employees.get_employee',
+                                    department_id=department['id'], employee_id=employee['id'])) if from_department
+                                else (url_for('employees.get_employees') if new
+                                    else url_for('employees.get_employee', employee_id=employee['id'])) }}">
+                        <img class="img_button_lg" src="{{ url_for('static', filename='images/007-close.png') }}"
+                             alt="">
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="container-md d-flex flex-column justify-content-center" style="background: none;">
+
+                <div class="d-flex">
+                    {{ form.name.label(class="text-left gray_color h3") }}
+                    {{ form.name(class="text_input", style="margin: auto 10px; height: 36px",
+                        placeholder="Name Surname" if new else employee['name'],
+                        value=prev_input['name'] if prev_input['name'] else ('' if new else employee['name'])) }}
+                </div>
+
+                <div class="d-flex">
+                    {% if from_department %}
+                        <div class="d-flex">
+                            <p class="text-left gray_color h3">Department:</p>
+                            <p class="text-left gray_color h3"
+                               style="margin-left: 10px">{{ department['name'] }}</p>
+                        </div>
+                    {% else %}
+                        {{ form.department.label(class="text-left gray_color h3") }}
+                        {{ form.department(class="text_input", style="margin: auto 10px; height: 36px",
+                            placeholder="Department" if new else employee['department']['name'],
+                            value=(prev_input['department'] if prev_input['department']
+                                    else ('' if new else employee['department']['name']))) }}
+                    {% endif %}
+                </div>
+
+                <div class="d-flex">
+                    {{ form.salary.label(class="text-left gray_color h3") }}
+                    {{ form.salary(class="text_input", style="margin: auto 10px; height: 36px",
+                        placeholder="300"  if new else employee['salary'],
+                            value=(prev_input['salary'] if prev_input['salary']
+                                else ('' if new else employee['salary']))) }}
+                </div>
+
+                <div class="d-flex">
+                    {{ form.date_of_birth.label(class="text-left gray_color h3") }}
+                    {{ form.date_of_birth(class="date_input", style="margin: auto 10px; height: 36px", max = form.max_date,
+                    value=(prev_input['date_of_birth'] if prev_input['date_of_birth']
+                                else("2002-05-04" if new
+                                else '-'.join(((employee['date_of_birth'] | string).split('.') | reverse))))) }}
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

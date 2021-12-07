@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Departments{% endblock %}
+{% block active %}departments{% endblock %}
+
+{% block content %}
+    <div class="container-xl d-block justify-content-center">
+        <p class="text-center gray_color h1">Departments</p>
+
+        <div class="container-lg d-flex align-items-center" style="background:none; margin-bottom: 0;">
+            <div class="mr-auto">
+                <div class="img_button_lg"></div>
+            </div>
+
+            <div class="flex-fill d-flex justify-content-between">
+                <div class="flex-grow-1" style="margin-left: 50px">
+                    <p class="text-left gray_color h3">Name</p>
+                </div>
+                <div style="margin-right: 50px"><p class="text-right gray_color h3">Average salary</p></div>
+            </div>
+
+            <div class="ml-auto">
+                <div class="img_button_lg"></div>
+            </div>
+            <div>
+                <div class="img_button_lg"></div>
+            </div>
+        </div>
+
+        {% for department in departments %}
+            <div class="container-lg d-flex align-items-center">
+                <div class="mr-auto">
+                    <a href="{{ url_for('departments.get_department', department_id=department['id']) }}">
+                        <img class="img_button_lg" src="{{ url_for('static', filename='images/008-eye.png') }}" alt="">
+                    </a>
+                </div>
+
+                <div class="flex-fill d-flex justify-content-between">
+                    <div class="flex-grow-1" style="margin-left: 50px">
+                        <p class="text-left gray_color end_with_dots h3" style="max-width: 220px">
+                            {{ department['name'] }}
+                        </p>
+                    </div>
+                    <div style="margin-right: 50px"><p class="text-right gray_color h3">{{ department['avg_salary'] }}
+                        $</p></div>
+                </div>
+
+                <div class="ml-auto">
+                    <a href="{{ url_for('departments.edit_department', department_id=department['id']) }}">
+                        <img class="img_button_lg" src="{{ url_for('static', filename='images/003-edit-text.png') }}"
+                             alt="">
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ url_for('departments.delete_department', department_id=department['id']) }}">
+                        <img class="img_button_lg" src="{{ url_for('static', filename='images/004-trash-bin.png') }}"
+                             alt="">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+
+        <div class="container-lg new_block d-flex align-items-center justify-content-center">
+            <a class="flex-fill" style="text-decoration: none" href="{{ url_for('departments.add_department') }}">
+                <p class="text-center gray_color h3">NEW</p>
+            </a>
+        </div>
+    </div>
+{% endblock %}
