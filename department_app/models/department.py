@@ -24,7 +24,7 @@ class Department(db.Model):
 
     def __init__(self, name, employees=None):
         self.name = name
-        self.employees = employees or[]
+        self.employees = employees or []
 
     def __repr__(self):
         """

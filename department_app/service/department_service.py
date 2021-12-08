@@ -89,7 +89,9 @@ class DepartmentService:
         if not department:
             raise ValueError('Invalid department id')
 
-        if cls.get_department_by_name(department_json.get('name', None)) != department:
+        department_in_db = cls.get_department_by_name(department_json.get('name', None))
+
+        if department_in_db and department_in_db != department:
             raise UniqueError('Department with such name is already exists')
 
         department = cls.schema.load(department_json, instance=department)
