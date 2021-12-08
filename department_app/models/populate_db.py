@@ -10,8 +10,8 @@ from datetime import date
 
 from department_app import app, db
 
-from department_app.models import department
-from department_app.models import employee
+from department_app.models.department import Department
+from department_app.models.employee import Employee
 
 
 def populate_db():
@@ -20,22 +20,22 @@ def populate_db():
 
     :return: None
     """
-    department_1 = department.Department('Research')
-    department_2 = department.Department('Purchase')
-    department_3 = department.Department('Human Resource')
-    department_4 = department.Department('Finance')
-    department_5 = department.Department('Marketing')
+    department_1 = Department('Research')
+    department_2 = Department('Purchase')
+    department_3 = Department('Human Resource')
+    department_4 = Department('Finance')
+    department_5 = Department('Marketing')
 
-    employee_1 = employee.Employee('Marty Maxwell', 700, date(2002, 5, 4), department_3)
-    employee_2 = employee.Employee('Erin Dolton', 4000, date(2002, 6, 3), department_1)
-    employee_3 = employee.Employee('Alex Marshman', 250, date(1989, 11, 30), department_2)
-    employee_4 = employee.Employee('Tilda Robson', 375, date(2000, 10, 1), department_3)
-    employee_5 = employee.Employee('Lois Gordon', 1000, date(2002, 10, 3), department_4)
-    employee_6 = employee.Employee('Geoffrey Vaughn', 2800, date(1993, 2, 23), department_5)
-    employee_7 = employee.Employee('Harry Tyler', 1200, date(1989, 11, 30), department_4)
-    employee_8 = employee.Employee('Dean Farmer', 4500, date(2002, 10, 4), department_1)
-    employee_9 = employee.Employee('Webster Robson', 500, date(1996, 5, 12), department_2)
-    employee_10 = employee.Employee('Leon Stevens', 900, date(1980, 2, 23), department_2)
+    employee_1 = Employee('Marty Maxwell', 700, date(2002, 5, 4), department_3)
+    employee_2 = Employee('Erin Dolton', 4000, date(2002, 6, 3), department_1)
+    employee_3 = Employee('Alex Marshman', 250, date(1989, 11, 30), department_2)
+    employee_4 = Employee('Tilda Robson', 375, date(2000, 10, 1), department_3)
+    employee_5 = Employee('Lois Gordon', 1000, date(2002, 10, 3), department_4)
+    employee_6 = Employee('Geoffrey Vaughn', 2800, date(1993, 2, 23), department_5)
+    employee_7 = Employee('Harry Tyler', 1200, date(1989, 11, 30), department_4)
+    employee_8 = Employee('Dean Farmer', 4500, date(2002, 10, 4), department_1)
+    employee_9 = Employee('Webster Robson', 500, date(1996, 5, 12), department_2)
+    employee_10 = Employee('Leon Stevens', 900, date(1980, 2, 23), department_2)
 
     db.session.add(department_1)
     db.session.add(department_2)

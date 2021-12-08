@@ -28,7 +28,7 @@ class EmployeeService:
 
         :return: list of all employees
         """
-        return Employee.query.all()
+        return db.session.query(Employee).all()
 
     @staticmethod
     def get_employee_by_id(employee_id: int) -> Employee:
@@ -41,7 +41,7 @@ class EmployeeService:
         """
         if not isinstance(employee_id, (int, str)):
             raise TypeError('id should be integer or string')
-        return Employee.query.filter_by(id=employee_id).first()
+        return db.session.query(Employee).filter_by(id=employee_id).first()
 
     @staticmethod
     def get_filtered_employees(filter_params: dict) -> list[Employee]:
@@ -55,7 +55,7 @@ class EmployeeService:
 
         # pylint: disable=no-member
 
-        employees = Employee.query
+        employees = db.session.query(Employee)
         if filter_params.get('name', None):
             employees = employees.filter(Employee.name.contains(filter_params['name']))
         if filter_params.get('department', None):

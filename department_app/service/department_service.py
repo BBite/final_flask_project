@@ -25,7 +25,7 @@ class DepartmentService:
 
         :return: list of all departments
         """
-        return Department.query.all()
+        return db.session.query(Department).all()
 
     @staticmethod
     def get_department_by_id(department_id: int) -> Department:
@@ -38,7 +38,7 @@ class DepartmentService:
         """
         if not isinstance(department_id, (int, str)):
             raise TypeError('id should be integer or string')
-        return Department.query.filter_by(id=department_id).first()
+        return db.session.query(Department).filter_by(id=department_id).first()
 
     @staticmethod
     def get_department_by_name(name: str) -> Department:
@@ -52,7 +52,7 @@ class DepartmentService:
         if not isinstance(name, str):
             raise TypeError('name should be string')
 
-        return Department.query.filter_by(name=name).first()
+        return db.session.query(Department).filter_by(name=name).first()
 
     @classmethod
     def add_department(cls, department_json) -> Department:
