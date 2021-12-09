@@ -39,7 +39,7 @@ class EmployeeService:
         :param employee_id: id of the employee to be fetched
         :return: employee with given id or None
         """
-        if not isinstance(employee_id, (int, str)):
+        if not isinstance(employee_id, (int, str)) or isinstance(employee_id, bool):
             raise TypeError('id should be integer or string')
         return db.session.query(Employee).filter_by(id=employee_id).first()
 
@@ -110,7 +110,7 @@ class EmployeeService:
         :raise UniqueError: in case of department with given name does not exist
         :return: employee that was updated
         """
-        if not isinstance(employee_id, (int, str)):
+        if not isinstance(employee_id, (int, str)) or isinstance(employee_id, bool):
             raise TypeError('id should be integer or string')
 
         employee = cls.get_employee_by_id(employee_id)
@@ -137,7 +137,7 @@ class EmployeeService:
         :raise ValueError: in case of absence of the employee with given id
         :return: None
         """
-        if not isinstance(employee_id, (int, str)):
+        if not isinstance(employee_id, (int, str)) or isinstance(employee_id, bool):
             raise TypeError('id should be integer or string')
 
         employee = cls.get_employee_by_id(employee_id)

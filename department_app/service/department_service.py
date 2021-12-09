@@ -27,6 +27,7 @@ class DepartmentService:
         """
         return db.session.query(Department).all()
 
+    # TODO try add | str and deploy to heroku
     @staticmethod
     def get_department_by_id(department_id: int) -> Department:
         """
@@ -36,7 +37,7 @@ class DepartmentService:
         :param department_id: id of the department to be fetched
         :return: department with given id or None
         """
-        if not isinstance(department_id, (int, str)):
+        if not isinstance(department_id, (int, str)) or isinstance(department_id, bool):
             raise TypeError('id should be integer or string')
         return db.session.query(Department).filter_by(id=department_id).first()
 
@@ -82,7 +83,7 @@ class DepartmentService:
         :raise UniqueError: in case of department with given name is already exists
         :return: department that was updated
         """
-        if not isinstance(department_id, (int, str)):
+        if not isinstance(department_id, (int, str)) or isinstance(department_id, bool):
             raise TypeError('id should be integer or string')
 
         department = cls.get_department_by_id(department_id)
@@ -108,7 +109,7 @@ class DepartmentService:
         :raise ValueError: in case of absence of the department with given id
         :return: None
         """
-        if not isinstance(department_id, (int, str)):
+        if not isinstance(department_id, (int, str)) or isinstance(department_id, bool):
             raise TypeError('id should be integer or string')
 
         department = cls.get_department_by_id(department_id)
