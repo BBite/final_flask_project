@@ -49,7 +49,9 @@ class EmployeeService:
         Fetches all employees filtered by given params from database
 
         :param filter_params: params to filter employees by
-        :raise ValueError: in case of both the exact date and the period being specified
+        :raise ValueError: in case of both the exact date and the period being specified or
+        in case start salary is greater than end salary or
+        in case start salary is later than end date
         :return: list of employees filtered by given params
         """
 
@@ -63,11 +65,24 @@ class EmployeeService:
             employees = employees.filter(Department.name.contains(filter_params['department']))
             employees = employees.with_entities(Employee)
 
+        if (
+                filter_params.get('start_salary', None) is not None
+                and filter_params.get('end_salary', None) is not None
+                and filter_params.get('start_salary', None) > filter_params.get('end_salary', None)
+        ):
+            raise ValueError('start salary should be less than end salary')
+
         # is not None is used to fix representation as False in case 0
         if filter_params.get('start_salary', None) is not None:
             employees = employees.filter(filter_params['start_salary'] <= Employee.salary)
         if filter_params.get('end_salary', None) is not None:
             employees = employees.filter(filter_params['end_salary'] >= Employee.salary)
+
+        if (
+                filter_params.get('start_date', None) and filter_params.get('end_date', None)
+                and filter_params.get('start_date', None) > filter_params.get('end_date', None)
+        ):
+            raise ValueError('start date should be earlier than end date')
 
         if filter_params.get('start_date', None):
             employees = employees.filter(filter_params['start_date'] <= Employee.date_of_birth)
