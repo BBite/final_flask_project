@@ -67,7 +67,7 @@ class DepartmentListApi(DepartmentApiBase):
         except ValidationError as error:
             app.logger.error(error.messages)
             return error.messages, 400
-        except UniqueError as error:
+        except (UniqueError, TypeError) as error:
             app.logger.error(str(error))
             return str(error), 400
 
@@ -129,7 +129,7 @@ class DepartmentApi(DepartmentApiBase):
         except ValidationError as error:
             app.logger.error(error.messages)
             return error.messages, 400
-        except UniqueError as error:
+        except (UniqueError, TypeError) as error:
             app.logger.error(str(error))
             return str(error), 400
         except ValueError:

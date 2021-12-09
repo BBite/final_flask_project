@@ -105,7 +105,14 @@ class EmployeeService:
         :return: employee that was added
         """
         employee = cls.schema.load(employee_json)
-        department = DepartmentService.get_department_by_name(employee_json['department']['name'])
+
+        department_name = None
+        department_json = employee_json.get('department', None)
+        if not department_json:
+            department_name = department_json.get('name', None)
+            if not isinstance(department_name, str):
+                raise TypeError('Department name should be string')
+        department = DepartmentService.get_department_by_name(department_name)
         if not department:
             raise ExistsError('Department with given name does not exist')
 
@@ -133,7 +140,14 @@ class EmployeeService:
             raise ValueError('Invalid employee id')
 
         employee = cls.schema.load(employee_json, instance=employee)
-        department = DepartmentService.get_department_by_name(employee_json['department']['name'])
+
+        department_name = None
+        department_json = employee_json.get('department', None)
+        if not department_json:
+            department_name = department_json.get('name', None)
+            if not isinstance(department_name, str):
+                raise TypeError('Department name should be string')
+        department = DepartmentService.get_department_by_name(department_name)
         if not department:
             raise ExistsError('Department with given name does not exist')
 

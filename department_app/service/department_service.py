@@ -64,7 +64,10 @@ class DepartmentService:
         :raise UniqueError: in case of department with given name is already exists
         :return: department that was added
         """
-        if cls.get_department_by_name(department_json.get('name', None)):
+        name = department_json.get('name', None)
+        if not isinstance(name, str):
+            raise TypeError('name should be string')
+        if cls.get_department_by_name(name):
             raise UniqueError('Department with such name is already exists')
 
         department = cls.schema.load(department_json)
@@ -90,7 +93,10 @@ class DepartmentService:
         if not department:
             raise ValueError('Invalid department id')
 
-        department_in_db = cls.get_department_by_name(department_json.get('name', None))
+        name = department_json.get('name', None)
+        if not isinstance(name, str):
+            raise TypeError('name should be string')
+        department_in_db = cls.get_department_by_name(department_json.get('name', name))
 
         if department_in_db and department_in_db != department:
             raise UniqueError('Department with such name is already exists')

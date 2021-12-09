@@ -91,7 +91,7 @@ class EmployeeListApi(EmployeeApiBase):
         except ValidationError as error:
             app.logger.error(error.messages)
             return error.messages, 400
-        except ExistsError as error:
+        except (ExistsError, TypeError) as error:
             app.logger.error(str(error))
             return str(error), 400
         employee = self.schema.dump(employee)
@@ -159,7 +159,7 @@ class EmployeeApi(EmployeeApiBase):
         except ValueError:
             app.logger.error('Employee not found')
             return 'Employee not found', 404
-        except ExistsError as error:
+        except (ExistsError, TypeError) as error:
             app.logger.error(str(error))
             return str(error), 400
         employee = self.schema.dump(employee)
