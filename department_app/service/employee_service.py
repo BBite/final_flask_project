@@ -108,7 +108,7 @@ class EmployeeService:
 
         department_name = None
         department_json = employee_json.get('department', None)
-        if not department_json:
+        if department_json:
             department_name = department_json.get('name', None)
             if not isinstance(department_name, str):
                 raise TypeError('Department name should be string')
@@ -143,7 +143,7 @@ class EmployeeService:
 
         department_name = None
         department_json = employee_json.get('department', None)
-        if not department_json:
+        if department_json:
             department_name = department_json.get('name', None)
             if not isinstance(department_name, str):
                 raise TypeError('Department name should be string')
