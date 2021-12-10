@@ -196,10 +196,11 @@ class EmployeeSearchApi(EmployeeApiBase):
     parser.add_argument('department', type=str)
     parser.add_argument('start_salary', type=float)
     parser.add_argument('end_salary', type=float)
-    # TODO test if work without lambda
-    parser.add_argument('start_date', type=get_date_or_none)
-    parser.add_argument('end_date', type=get_date_or_none)
-    parser.add_argument('in_date', type=get_date_or_none)
+
+    # pylint: disable=unnecessary-lambda
+    parser.add_argument('start_date', type=lambda date_str: get_date_or_none(date_str))
+    parser.add_argument('end_date', type=lambda date_str: get_date_or_none(date_str))
+    parser.add_argument('in_date', type=lambda date_str: get_date_or_none(date_str))
 
     def get(self):
         """
