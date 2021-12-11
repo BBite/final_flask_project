@@ -95,7 +95,7 @@ def add_department():
     app.logger.debug('department_form.html was rendered')
 
     return render_template('department_form.html',
-                           deparment={}, form=form, new=True, prev_input=form.data), 200
+                           department={}, form=form, new=True, prev_input=form.data), 200
 
 
 @departments_blueprint.route('/<int:department_id>/edit', methods=['GET', 'POST'])
