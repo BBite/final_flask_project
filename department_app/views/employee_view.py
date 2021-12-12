@@ -55,7 +55,6 @@ def get_employees():
     form = FilterForm()
 
     employees = EmployeeService.get_employees()
-    employees = employees_schema.dump(employees)
 
     if form.validate_on_submit():
         filter_params = {
@@ -77,7 +76,6 @@ def get_employees():
             filter_params['end_date'] = form.end_date.data
 
         employees = EmployeeService.get_filtered_employees(filter_params)
-        employees = employees_schema.dump(employees)
     else:
         for field_name, error_messages in form.errors.items():
             for err in error_messages:
@@ -86,6 +84,8 @@ def get_employees():
 
     app.logger.debug(f'Data: {employees}')
     app.logger.debug('employees.html was rendered')
+
+    employees = employees_schema.dump(employees)
 
     return render_template('employees.html', employees=employees, form=form, prev_input=form.data)
 
@@ -228,7 +228,7 @@ def edit_employee(employee_id):
                                 department_id=department_id, employee_id=employee_id))
 
     for field_name, error_messages in form.errors.items():
-        for err in error_messages:
+        for err in error_messages:  # pragma: no cover
             flash(f'{form[field_name].label.text}{err}', category='danger')
             app.logger.error(f'{form[field_name].label.text}{err}')
 
