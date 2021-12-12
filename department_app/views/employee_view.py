@@ -206,11 +206,11 @@ def edit_employee(employee_id):
 
     if department_id:
         department = DepartmentService.get_department_by_id(department_id)
-        department = department_schema.dump(department)
         if not department:
             app.logger.error(f'There is no department with given id({department_id})')
             abort(404)
 
+        department = department_schema.dump(department)
         form.with_department()
 
     if form.validate_on_submit():
