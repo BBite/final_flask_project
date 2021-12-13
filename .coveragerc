@@ -1,0 +1,4 @@
+[run]
+source = department_app/
+[report]
+omit = */migrations/*, */forms/*, */models/*, */schemas/*, */tests/*, *__init__.py, */service/exceptions.py

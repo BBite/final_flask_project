@@ -30,6 +30,8 @@ from flask_migrate import Migrate
 
 from flask_restful import Api
 
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = cur_dir[:cur_dir.find('\\final_project') + len('\\final_project')]
 TEMPLATES_DIR = 'templates'
 MIGRATION_DIR = os.path.join('department_app', 'migrations')
 
@@ -37,7 +39,7 @@ app = Flask(__name__, template_folder=TEMPLATES_DIR)
 
 # from dotenv import load_dotenv
 #
-# load_dotenv('.env')
+# load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 
@@ -59,7 +61,7 @@ init_api(api)
 # logging
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
 
-file_handler = logging.FileHandler(filename='app.log', mode='w')
+file_handler = logging.FileHandler(filename=os.path.join(BASE_DIR, 'app.log'), mode='w')
 file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.DEBUG)
 
