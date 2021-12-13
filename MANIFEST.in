@@ -1,0 +1,2 @@
+recursive-include department_app/templates *
+recursive-include department_app/static *
