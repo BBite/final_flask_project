@@ -31,7 +31,8 @@ from flask_migrate import Migrate
 from flask_restful import Api
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
-BASE_DIR = cur_dir[:cur_dir.find('\\final_project') + len('\\final_project')]
+BASE_DIR = (cur_dir[:cur_dir.find('\\final_project') + len('\\final_project')]
+            if cur_dir.find('\\final_project') != -1 else cur_dir)
 TEMPLATES_DIR = 'templates'
 MIGRATION_DIR = os.path.join('department_app', 'migrations')
 
