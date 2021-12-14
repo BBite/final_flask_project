@@ -204,7 +204,7 @@ class TestEmployeeView(BaseTestCase):
             self.assertContext('employees', expected_json)
             self.assertContext('prev_input', form_data)
 
-            self.assertMessageFlashed('To:end salary must be less than start salary'
+            self.assertMessageFlashed('End salary: end salary must be less than start salary'
                                       , category='danger')
 
             get_employees_mock.assert_called_once()

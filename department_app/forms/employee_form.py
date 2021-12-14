@@ -88,5 +88,6 @@ class FilterForm(FlaskForm):
         """
         Validation for end_date field
         """
-        if field.data and self.start_date.data and field.data < self.start_date.data:
+        if (field.data and self.start_date.data and field.data < self.start_date.data
+                and self.date_input_type.data == 'between'):
             raise ValidationError('end date must be later than start date')

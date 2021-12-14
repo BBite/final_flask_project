@@ -79,7 +79,8 @@ def get_employees():
     else:
         for field_name, error_messages in form.errors.items():
             for err in error_messages:
-                flash(f'{form[field_name].label.text}{err}', category='danger')
+                flash(f'{form[field_name].name.replace("_", " ").capitalize()}: {err}',
+                      category='danger')
                 app.logger.error(f'{form[field_name].label.text}{err}')
 
     app.logger.debug(f'Data: {employees}')
@@ -167,7 +168,8 @@ def add_employee():
 
     for field_name, error_messages in form.errors.items():
         for err in error_messages:
-            flash(f'{form[field_name].label.text}{err}', category='danger')
+            flash(f'{form[field_name].name.replace("_", " ").capitalize()}: {err}',
+                  category='danger')
             app.logger.error(f'{form[field_name].label.text}{err}')
 
     app.logger.debug('employee_form.html was rendered')
@@ -229,7 +231,8 @@ def edit_employee(employee_id):
 
     for field_name, error_messages in form.errors.items():
         for err in error_messages:  # pragma: no cover
-            flash(f'{form[field_name].label.text}{err}', category='danger')
+            flash(f'{form[field_name].name.replace("_", " ").capitalize()}: {err}',
+                  category='danger')
             app.logger.error(f'{form[field_name].label.text}{err}')
 
     app.logger.debug('employee_form.html was rendered')
